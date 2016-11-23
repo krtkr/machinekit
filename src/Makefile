@@ -1281,6 +1281,9 @@ hal_speaker-objs := hal/drivers/hal_speaker.o $(MATHSTUB)
 obj-$(CONFIG_HAL_SKELETON) += hal_skeleton.o
 hal_skeleton-objs := hal/drivers/hal_skeleton.o $(MATHSTUB)
 
+obj-$(CONFIG_HAL_GPIO) += hal_linux_gpio.o
+hal_linux_gpio-objs := hal/drivers/hal_linux_gpio.o
+
 ifdef TARGET_PLATFORM_RASPBERRY
 obj-$(CONFIG_HAL_GPIO) += hal_gpio.o
 hal_gpio-objs := hal/drivers/hal_gpio.o hal/drivers/cpuinfo.o
@@ -1690,7 +1693,7 @@ $(RTLIBDIR)/streamer$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(streamer-objs))
 $(RTLIBDIR)/sampler$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(sampler-objs))
 $(RTLIBDIR)/hal_parport$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(hal_parport-objs))
 $(RTLIBDIR)/probe_parport$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(probe_parport-objs))
-
+$(RTLIBDIR)/hal_linux_gpio$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(hal_linux_gpio-objs))
 
 ifeq ($(BUILD_SYS),user-dso)
 $(RTLIBDIR)/probe_parport$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(probe_parport-objs))

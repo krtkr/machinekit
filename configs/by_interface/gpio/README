@@ -1,0 +1,17 @@
+This configuration is an example for basic stepper machines using linux GPIO driver.
+
+Detailed description:
+
+* ini files
+
+-- gpio_stepper_mm.ini - metric setup for a gpio stepper machine
+
+* nml files
+
+-- it uses a default nml file (found in configs/common/linuxcnc.nml)
+
+* hal files
+
+-- it uses a default stepper hal file (configs/common/core_stepper.hal)
+
+-- standard_pinout.hal - include this from the ini to get you a standard pinout
