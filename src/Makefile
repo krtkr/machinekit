@@ -1450,6 +1450,10 @@ obj-$(CONFIG_HAL_GM) += hal_gm.o
 hal_gm-objs := hal/drivers/hal_gm.o $(MATHSTUB)
 endif
 
+obj-$(CONFIG_HAL_ETH_CTRL) += hal_eth_ctrl.o
+hal_eth_ctrl-objs := hal/drivers/eth_ctrl/hal_eth_ctrl.o \
+                     hal/drivers/eth_ctrl/eth_ctrl.o
+
 # Gnu make 'expression' syntax is pathetic. What were these guys smoking?
 # turn on by default
 BUILD_HOSTMOT2=yes
@@ -1818,6 +1822,7 @@ $(RTLIBDIR)/streamer$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(streamer-objs))
 $(RTLIBDIR)/sampler$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(sampler-objs))
 $(RTLIBDIR)/hal_parport$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(hal_parport-objs))
 $(RTLIBDIR)/probe_parport$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(probe_parport-objs))
+$(RTLIBDIR)/hal_eth_ctrl$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(hal_eth_ctrl-objs))
 
 
 ifeq ($(BUILD_SYS),user-dso)
