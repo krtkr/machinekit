@@ -1,0 +1,11 @@
+This configuration drives a 3-axis stepper machine using AIBS Ethernet Control FPGA board with eth_ctrl firmware.
+
+These configs have 3 Encoders and 3 StepGens
+
+eth_ctrl_core.hal - common hal initialization
+
+eth_ctrl_mill.hal - an example pins and ports connection, board configuration for 3 axis milling machine with Encoders
+
+eth_ctrl_mill.ini - an example ini file for 3-axis milling machine
+
+tool.tlb - an example tools table

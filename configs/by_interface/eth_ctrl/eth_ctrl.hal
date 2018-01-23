@@ -1,0 +1,75 @@
+loadrt trivkins
+
+# trajectory planner
+loadrt tp
+loadrt [EMCMOT]EMCMOT base_period_nsec=[EMCMOT]BASE_PERIOD servo_period_nsec=[EMCMOT]SERVO_PERIOD num_joints=[TRAJ]AXES tp=tp kins=trivkins
+
+# eth_ctrl driver
+loadrt hal_eth_ctrl module_ids=[ETHCTRL]MODULE_ID nic_name=[ETHCTRL]NIC_NAME
+
+addf hal_eth_ctrl.read                    servo-thread
+addf motion-command-handler               servo-thread
+addf motion-controller                    servo-thread
+addf hal_eth_ctrl.write                   servo-thread
+
+# ################
+# X [0] Axis
+# ################
+
+setp hal_eth_ctrl.0.step_dir.0.invert_enable            [AXIS_0]INVERT_ENABLE
+setp hal_eth_ctrl.0.step_dir.0.invert_step              [AXIS_0]INVERT_STEP
+setp hal_eth_ctrl.0.step_dir.0.invert_dir               [AXIS_0]INVERT_DIR
+setp hal_eth_ctrl.0.step_dir.0.step_length              [AXIS_0]STEPLEN
+setp hal_eth_ctrl.0.step_dir.0.vel_cmd_min              [AXIS_0]MIN_VELOCITY
+setp hal_eth_ctrl.0.step_dir.0.pos_scale                [AXIS_0]SCALE
+
+# position command and feedback
+net Xvel-cmd axis.0.joint-vel-cmd => hal_eth_ctrl.0.step_dir.0.vel_cmd
+net Xpos-fb hal_eth_ctrl.0.step_dir.0.pos_fb => axis.0.motor-pos-fb
+
+net Xen axis.0.amp-enable-out => hal_eth_ctrl.0.step_dir.0.enable
+
+# ################
+# Y [1] Axis
+# ################
+
+setp hal_eth_ctrl.0.step_dir.1.invert_enable            [AXIS_1]INVERT_ENABLE
+setp hal_eth_ctrl.0.step_dir.1.invert_step              [AXIS_1]INVERT_STEP
+setp hal_eth_ctrl.0.step_dir.1.invert_dir               [AXIS_1]INVERT_DIR
+setp hal_eth_ctrl.0.step_dir.1.step_length              [AXIS_1]STEPLEN
+setp hal_eth_ctrl.0.step_dir.1.vel_cmd_min              [AXIS_1]MIN_VELOCITY
+setp hal_eth_ctrl.0.step_dir.1.pos_scale                [AXIS_1]SCALE
+
+# position command and feedback
+net Yvel-cmd axis.1.joint-vel-cmd => hal_eth_ctrl.0.step_dir.1.vel_cmd
+net Ypos-fb hal_eth_ctrl.0.step_dir.1.pos_fb => axis.1.motor-pos-fb
+
+net Yen axis.1.amp-enable-out => hal_eth_ctrl.0.step_dir.1.enable
+
+# ################
+# Z [2] Axis
+# ################
+
+setp hal_eth_ctrl.0.step_dir.2.invert_enable            [AXIS_2]INVERT_ENABLE
+setp hal_eth_ctrl.0.step_dir.2.invert_step              [AXIS_2]INVERT_STEP
+setp hal_eth_ctrl.0.step_dir.2.invert_dir               [AXIS_2]INVERT_DIR
+setp hal_eth_ctrl.0.step_dir.2.step_length              [AXIS_2]STEPLEN
+setp hal_eth_ctrl.0.step_dir.2.vel_cmd_min              [AXIS_2]MIN_VELOCITY
+setp hal_eth_ctrl.0.step_dir.2.pos_scale                [AXIS_2]SCALE
+
+# position command and feedback
+net Zvel-cmd axis.2.joint-vel-cmd => hal_eth_ctrl.0.step_dir.2.vel_cmd
+net Zpos-fb hal_eth_ctrl.0.step_dir.2.pos_fb => axis.2.motor-pos-fb
+
+net Zen axis.2.amp-enable-out => hal_eth_ctrl.0.step_dir.2.enable
+
+# ##################################################
+# Standard I/O Block - EStop, Etc
+# ##################################################
+
+# create a signal for the estop loopback
+net estop-loop iocontrol.0.user-enable-out => iocontrol.0.emc-enable-in
+
+# create signals for tool loading loopback
+net tool-prep-loop iocontrol.0.tool-prepare => iocontrol.0.tool-prepared
+net tool-change-loop iocontrol.0.tool-change => iocontrol.0.tool-changed
