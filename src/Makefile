@@ -1345,6 +1345,10 @@ obj-$(CONFIG_STREAMER) += streamer.o
 streamer-objs := hal/components/streamer.o $(MATHSTUB)
 obj-$(CONFIG_SAMPLER) += sampler.o
 sampler-objs := hal/components/sampler.o $(MATHSTUB)
+obj-$(CONFIG_HAL_UDP_LOGGER) += hal_udp_logger.o
+hal_udp_logger-objs := \
+    hal/components/udp_logger/hal_udp_logger.o \
+    hal/components/udp_logger/udp_logger_lib.o
 
 # Subdirectory: hal/support
 ifdef TARGET_PLATFORM_BEAGLEBONE
@@ -1823,6 +1827,7 @@ $(RTLIBDIR)/sampler$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(sampler-objs))
 $(RTLIBDIR)/hal_parport$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(hal_parport-objs))
 $(RTLIBDIR)/probe_parport$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(probe_parport-objs))
 $(RTLIBDIR)/hal_eth_ctrl$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(hal_eth_ctrl-objs))
+$(RTLIBDIR)/hal_udp_logger$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(hal_udp_logger-objs))
 
 
 ifeq ($(BUILD_SYS),user-dso)
